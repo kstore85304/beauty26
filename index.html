@@ -1,113 +1,385 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>미용사 합격 앱</title>
-    <style>
-        body { font-family: 'Malgun Gothic', sans-serif; padding: 20px; line-height: 1.6; background-color: #f4f4f4; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #333; font-size: 26px; }
-        h2 { color: #444; font-size: 22px; margin-bottom: 20px; }
-        .menu-list { list-style: none; padding: 0; }
-        .menu-item { background: #fff; border: 2px solid #4CAF50; margin: 10px 0; padding: 20px; border-radius: 10px; font-size: 22px; font-weight: bold; cursor: pointer; text-align: center; transition: 0.3s; }
-        .menu-item:hover { background: #4CAF50; color: white; }
-        .option { display: block; margin: 15px 0; font-size: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; }
-        .wrong { background-color: #e0e0e0 !important; color: #888; cursor: not-allowed; }
-        .correct { background-color: #d4edda !important; color: #155724; font-weight: bold; border: 2px solid #28a745; }
-        #explanation { margin-top: 20px; padding: 15px; background-color: #e7f3fe; border-left: 6px solid #2196F3; display: none; font-size: 19px; }
-        .btn { width: 100%; padding: 15px; font-size: 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; }
-        .btn-next { background-color: #2196F3; color: white; display: none; }
-        .btn-home { background-color: #666; color: white; margin-top: 20px; }
-        b { color: #d9534f; }
-    </style>
+<meta charset="UTF-8">
+<title>미용사 합격 앱</title>
+
+<style>
+
+body{
+font-family:'Malgun Gothic';
+padding:20px;
+background:#f4f4f4;
+}
+
+.container{
+max-width:600px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.menu-item{
+background:#fff;
+border:2px solid #4CAF50;
+margin:10px 0;
+padding:20px;
+border-radius:10px;
+font-size:22px;
+font-weight:bold;
+cursor:pointer;
+text-align:center;
+}
+
+.menu-item:hover{
+background:#4CAF50;
+color:white;
+}
+
+.option{
+display:block;
+margin:15px 0;
+font-size:20px;
+padding:15px;
+border:1px solid #ddd;
+border-radius:8px;
+cursor:pointer;
+}
+
+.wrong{
+background:#e0e0e0;
+color:#888;
+}
+
+.correct{
+background:#d4edda;
+border:2px solid #28a745;
+}
+
+#explanation{
+margin-top:20px;
+padding:15px;
+background:#e7f3fe;
+border-left:6px solid #2196F3;
+display:none;
+}
+
+.btn{
+width:100%;
+padding:15px;
+font-size:20px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+margin-top:10px;
+}
+
+.btn-next{
+background:#2196F3;
+color:white;
+display:none;
+}
+
+.btn-retry{
+background:#ff9800;
+color:white;
+display:none;
+}
+
+.btn-home{
+background:#666;
+color:white;
+margin-top:20px;
+}
+
+.check-btn{
+margin-top:10px;
+font-size:18px;
+cursor:pointer;
+}
+
+.checked{
+color:#ff5722;
+font-weight:bold;
+}
+
+</style>
 </head>
+
 <body>
 
 <div class="container">
-    <div id="home-screen">
-        <h1>기출문제 풀이</h1>
-        <ul class="menu-list">
-            <li class="menu-item" onclick="startQuiz(1)">기출문제 1회</li>
-            <li class="menu-item" onclick="startQuiz(2)">기출문제 2회</li>
-			<li class="menu-item" onclick="startQuiz(3)">기출문제 3회</li>
-            <li class="menu-item" onclick="startQuiz(4)">기출문제 4회</li>
-            <li class="menu-item" onclick="startQuiz(5)">기출문제 5회</li>
-            <li class="menu-item" onclick="startQuiz(6)">기출문제 6회</li>
-			<li class="menu-item" onclick="startQuiz(7)">기출문제 7회</li>
-            <li class="menu-item" onclick="startQuiz(8)">기출문제 8회</li>
 
-        </ul>
-    </div>
+<div id="home-screen">
 
-    <div id="quiz-screen" style="display:none;">
-        <h2 id="quiz-title"></h2>
-        <h3 id="question-text"></h3>
-        <div id="options-container"></div>
-        <div id="explanation"></div>
-        <button id="next-btn" class="btn btn-next" onclick="nextQuestion()">다음 문제로</button>
-        <button class="btn btn-home" onclick="goHome()">목록으로 돌아가기</button>
-    </div>
+<h1>기출문제 풀이</h1>
+
+<div class="menu-item" onclick="startRandomQuiz()">🎲 랜덤 문제 (60문제)</div>
+
+<div class="menu-item" onclick="startChecked()">✔ 체크문제 다시풀기</div>
+
+<div class="menu-item" onclick="startQuiz(1)">기출문제 1회</div>
+<div class="menu-item" onclick="startQuiz(2)">기출문제 2회</div>
+<div class="menu-item" onclick="startQuiz(3)">기출문제 3회</div>
+<div class="menu-item" onclick="startQuiz(4)">기출문제 4회</div>
+<div class="menu-item" onclick="startQuiz(5)">기출문제 5회</div>
+<div class="menu-item" onclick="startQuiz(6)">기출문제 6회</div>
+<div class="menu-item" onclick="startQuiz(7)">기출문제 7회</div>
+<div class="menu-item" onclick="startQuiz(8)">기출문제 8회</div>
+
+</div>
+
+<div id="quiz-screen" style="display:none">
+
+<button class="btn btn-home" onclick="goHome()">목록으로 돌아가기</button>
+
+<div id="checkBtn" class="check-btn" onclick="toggleCheck()">체크</div>
+
+<h2 id="quiz-title"></h2>
+
+<h3 id="question-text"></h3>
+
+<div id="options-container"></div>
+
+<div id="explanation"></div>
+
+<button id="next-btn" class="btn btn-next" onclick="nextQuestion()">다음 문제</button>
+
+<button id="retry-btn" class="btn btn-retry" onclick="retryWrong()">틀린 문제 다시풀기</button>
+
+</div>
+
 </div>
 
 <script src="./beauty_question_1-7.js"></script>
+
 <script>
-    //const allQuizzes = 기출문제 1-7회기	
-	
-    let currentSet = [];
-    let currentIdx = 0;
 
-    function startQuiz(num) {
-        if(!allQuizzes[num]) {
-            alert(num + "회차 문제는 준비 중입니다.");
-            return;
-        }
-        currentSet = allQuizzes[num];
-        currentIdx = 0;
-        document.getElementById('home-screen').style.display = 'none';
-        document.getElementById('quiz-screen').style.display = 'block';
-        document.getElementById('quiz-title').innerText = "기출문제 " + num + "회";
-        loadQuestion();
-    }
+let currentSet=[]
+let currentIdx=0
+let wrongThisRound=[]
+let checkList=[]
 
-    function loadQuestion() {
-        const data = currentSet[currentIdx];
-        document.getElementById('question-text').innerHTML = data.q;
-        const container = document.getElementById('options-container');
-        container.innerHTML = '';
-        document.getElementById('explanation').style.display = 'none';
-        document.getElementById('next-btn').style.display = 'none';
+function startQuiz(num){
 
-        data.a.forEach((txt, i) => {
-            const div = document.createElement('div');
-            div.className = 'option';
-            div.innerText = txt;
-            div.onclick = () => {
-                if(i === data.c) {
-                    div.className = 'option correct';
-                    document.getElementById('explanation').innerHTML = "<strong>정답의 근거:</strong> " + data.e;
-                    document.getElementById('explanation').style.display = 'block';
-                    document.getElementById('next-btn').style.display = 'block';
-                } else {
-                    div.className = 'option wrong';
-                }
-            };
-            container.appendChild(div);
-        });
-    }
+if(!allQuizzes[num]){
+alert("문제 준비중")
+return
+}
 
-    function nextQuestion() {
-        currentIdx++;
-        if (currentIdx < currentSet.length) loadQuestion();
-        else { alert("40번까지 모두 풀었습니다!"); goHome(); }
-    }
+currentSet=JSON.parse(JSON.stringify(allQuizzes[num]))
 
-    function goHome() {
-        document.getElementById('home-screen').style.display = 'block';
-        document.getElementById('quiz-screen').style.display = 'none';
-    }
+currentIdx=0
+wrongThisRound=[]
+
+showQuiz("기출문제 "+num+"회")
+
+}
+
+function startRandomQuiz(){
+
+let all=[]
+
+for(let key in allQuizzes){
+all=all.concat(allQuizzes[key])
+}
+
+all=shuffleArray(all)
+
+currentSet=JSON.parse(JSON.stringify(all.slice(0,60)))
+
+currentIdx=0
+wrongThisRound=[]
+
+showQuiz("랜덤 문제 (60문제)")
+
+}
+
+function startChecked(){
+
+if(checkList.length===0){
+alert("체크된 문제가 없습니다")
+return
+}
+
+currentSet=shuffleArray(checkList)
+
+currentIdx=0
+wrongThisRound=[]
+
+showQuiz("체크문제")
+
+}
+
+function showQuiz(title){
+
+document.getElementById('home-screen').style.display='none'
+document.getElementById('quiz-screen').style.display='block'
+
+document.getElementById('quiz-title').innerText=title
+
+loadQuestion()
+
+}
+
+function loadQuestion(){
+
+const data=currentSet[currentIdx]
+
+shuffleOptions(data)
+
+document.getElementById('question-text').innerHTML=data.q
+
+const container=document.getElementById('options-container')
+
+container.innerHTML=''
+
+document.getElementById('explanation').style.display='none'
+document.getElementById('next-btn').style.display='none'
+
+updateCheckButton()
+
+const circle=["①","②","③","④"]
+
+data.a.forEach((txt,i)=>{
+
+const div=document.createElement('div')
+
+div.className='option'
+
+txt = txt.replace(/^[①②③④⑤⑥⑦⑧⑨⑩]\s*/, '')
+txt = txt.replace(/^[0-9]+\.\s*/, '')
+txt = txt.replace(/^[가-힣]\.\s*/, '')
+
+div.innerText=circle[i]+" "+txt
+
+div.onclick=()=>{
+
+if(i===data.c){
+
+div.className='option correct'
+
+document.querySelectorAll('.option').forEach(o=>o.onclick=null)
+
+document.getElementById('explanation').innerHTML="<b>해설:</b> "+data.e
+document.getElementById('explanation').style.display='block'
+
+document.getElementById('next-btn').style.display='block'
+
+}else{
+
+div.classList.add('wrong')
+
+if(!wrongThisRound.includes(data)){
+wrongThisRound.push(data)
+}
+
+}
+
+}
+
+container.appendChild(div)
+
+})
+
+}
+
+function toggleCheck(){
+
+const data=currentSet[currentIdx]
+
+if(checkList.includes(data)){
+checkList=checkList.filter(q=>q!==data)
+}else{
+checkList.push(data)
+}
+
+updateCheckButton()
+
+}
+
+function updateCheckButton(){
+
+const btn=document.getElementById("checkBtn")
+const data=currentSet[currentIdx]
+
+if(checkList.includes(data)){
+btn.classList.add("checked")
+}else{
+btn.classList.remove("checked")
+}
+
+}
+
+function nextQuestion(){
+
+currentIdx++
+
+if(currentIdx<currentSet.length){
+
+loadQuestion()
+
+}else{
+
+if(wrongThisRound.length>0){
+
+document.getElementById('retry-btn').style.display='block'
+
+alert("틀린 문제 "+wrongThisRound.length+"개 있습니다")
+
+}else{
+
+alert("모든 문제를 맞췄습니다")
+
+goHome()
+
+}
+
+}
+
+}
+
+function retryWrong(){
+
+currentSet=shuffleArray(wrongThisRound)
+
+currentIdx=0
+wrongThisRound=[]
+
+document.getElementById('retry-btn').style.display='none'
+
+loadQuestion()
+
+}
+
+function goHome(){
+
+document.getElementById('home-screen').style.display='block'
+document.getElementById('quiz-screen').style.display='none'
+
+}
+
+function shuffleArray(array){
+return array.sort(()=>Math.random()-0.5)
+}
+
+function shuffleOptions(q){
+
+let options=q.a.map((text,i)=>({
+text:text,
+correct:i===q.c
+}))
+
+options.sort(()=>Math.random()-0.5)
+
+q.a=options.map(o=>o.text)
+q.c=options.findIndex(o=>o.correct)
+
+}
+
 </script>
+
 </body>
-<footer>
-  <p align="center" font-size="10px" color="grey" style="font-style: italic;"><b>© Copyright 2026 kstore85304@gitgub.com All rights reserved.</b></p>
-</footer>
 </html>
